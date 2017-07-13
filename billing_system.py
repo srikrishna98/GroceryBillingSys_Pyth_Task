@@ -52,3 +52,48 @@ class Shop:
             print("product doesn't exist")
             option=input("\npress C to continue Q to quit")
         print("\nAmount to be payed :Rs."+total)
+    def delete_products(self):
+        prod = [];
+        flag = 0
+        name = input("Enter the name of the product to be delted:")
+        with open("product.csv", 'r') as csvf:
+            reader = csv.DictReader(csvf)
+            for row in reader:
+                # print (row["Name"])
+                if (name and row["Name"] != name):
+                    prod.append(row);
+                if row['Name'] is name:
+                    flag = 1;
+        # print(prod)
+        if flag == 0:
+            print(name + " is not found ")
+        else:
+            with open("product.csv", 'w') as csvf:
+                writer = csv.DictWriter(csvf, fieldnames=Fn)
+                writer.writeheader();
+                writer.writerows(prod)
+            print("Item deleted :D")
+product = Shop();
+ch=-1
+while (ch is not 0):
+    print("\n1.ADD PRODUCT\n2.DISPLAY PRODUCT\n3.SEARCH PRODUCT\n4.DELETE PRODUCT\n5.BILLING\n0 to exit")
+    ch=input("\nEnter your choice")
+    if(ch is 1):
+        name=input("enter product name:")
+        qty=input("quantity:")
+        cost=input("cost:")
+        product.add_product(name,qty,cost)
+    elif ch is 2:
+        product.display_product()
+    elif ch is 3:
+        name = input("enter product name:")
+        product.search_product(name)
+    elif ch is 4:
+        product.delete_products()
+    elif ch is 5:
+        product.billin()
+    elif ch is 0:
+        print("Thanks for shopping with us!")
+    else:
+        print("Key not found")
+print("exit succesfull")
